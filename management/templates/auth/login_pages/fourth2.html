@@ -1,0 +1,319 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>{{ title }}</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom Styles -->
+    <style>
+      body {
+        background: linear-gradient(-45deg, #0f0c29, #302b63, #90ee90);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: #f8f9fa; /* Light text */
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .btn-custom,
+      a {
+        background-color: #6f42c1; /* Purple */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+      }
+
+      .btn-custom:hover,
+      a:hover {
+        background-color: #f0ad4e; /* Yellow */
+        color: #d9534f; /* Red */
+      }
+
+      .table-quiz {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 30); /* Simple shadow effect */
+      }
+
+      .table-quiz th,
+      .table-quiz td {
+        border-top: 1px solid #ddd; /* Light gray border */
+        padding: 8px;
+      }
+
+      .table-quiz th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #6f42c1;
+        color: white;
+      }
+
+      input[type="radio"] {
+        margin-right: 5px;
+      }
+      #timer {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        background-color: #6f42c1;
+        padding: 10px;
+        border-radius: 5px;
+        color: black;
+      }
+
+      .timer-critical {
+        color: red;
+      }
+      .hide {
+        display: none;
+      }
+      .hidden {
+        display: none;
+      }
+
+      .button-container {
+        position: relative;
+        display: inline-block; /* Allows the container to fit the content width */
+        margin-right: 10px; /* Optional: Adds some spacing between the buttons */
+      }
+      .instruction {
+        display: none;
+        position: absolute;
+        margin-top: 5px; /* Adjust this value as needed */
+        background-color: #f8f9fa; /* Light text background for visibility */
+        color: #0f0c29; /* Dark text color for readability */
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 0.8em;
+        white-space: nowrap; /* Prevents the text from wrapping */
+      }
+
+      .btn-custom:hover + .instruction {
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .table-quiz,
+        .table-quiz th,
+        .table-quiz td {
+          border: none;
+        }
+
+        .table-quiz {
+          display: block;
+          overflow-x: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timer">00:00</div>
+    <div class="container mt-4">
+      <h1>{{ heading }}</h1>
+      <p>{{ paragraph }}</p>
+      <p>{{ eMail }}</p>
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn-custom"
+          id="showResultButton"
+          onclick="showResults()"
+        >
+          Show result
+        </button>
+        <span class="instruction" id="showResultInstruction"
+          >クイズの結果を表示する</span
+        >
+      </div>
+
+      <div class="button-container">
+        <a href="{% url 'answer' %}" class="btn-custom">View Answers</a>
+        <span class="instruction" id="secondQuizInstruction"
+          >回答ページを表示</span
+        >
+      </div>
+      <br />
+      <br />
+      <form
+        class="form-group"
+        action="{% url 'fourth2' %}"
+        method="post"
+        id="quiz-form"
+      >
+        {% csrf_token %}
+        <table border="0" class="table-quiz">
+          <tr>
+            <th>問題番号</th>
+            <th>問題</th>
+            <th>選択肢１</th>
+            <th>選択肢２</th>
+            <th>選択肢３</th>
+            <th>選択肢４</th>
+          </tr>
+          {% for row in rows %}
+          <tr>
+            <td>{{ row.0 }}</td>
+            <td>{{ row.1 }}</td>
+            <td>
+              <input
+                type="radio"
+                name="answer{{ row.0 }}"
+                value="1"
+                id="option1_{{ row.0 }}"
+              />
+              <label for="option1_{{ row.0 }}">{{ row.2 }}</label>
+            </td>
+            <td>
+              <input
+                type="radio"
+                name="answer{{ row.0 }}"
+                value="2"
+                id="option2_{{ row.0 }}"
+              />
+              <label for="option2_{{ row.0 }}">{{ row.3 }}</label>
+            </td>
+            <td>
+              <input
+                type="radio"
+                name="answer{{ row.0 }}"
+                value="3"
+                id="option3_{{ row.0 }}"
+              />
+              <label for="option3_{{ row.0 }}">{{ row.4 }}</label>
+            </td>
+            <td>
+              <input
+                type="radio"
+                name="answer{{ row.0 }}"
+                value="4"
+                id="option4_{{ row.0 }}"
+              />
+              <label for="option4_{{ row.0 }}">{{ row.5 }}</label>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        <div class="button-container">
+          <button type="submit" class="btn-custom">Submit</button>
+          <span class="instruction" id="submitInstruction"
+            >採点のために回答を提出する</span
+          >
+        </div>
+
+        <!-- Pagination buttons if needed -->
+        <input type="hidden" name="next_page" value="1" />
+        <input type="hidden" name="prev_page" value="1" />
+      </form>
+
+      <p class="hide">Correct Answers: {{ correct_count1 }}</p>
+      <p class="hide">Incorrect Answers: {{ incorrect_count1 }}</p>
+      <p
+        id="results"
+        class="hide"
+        data-correct="{{ correct_count1 }}"
+        data-incorrect="{{ incorrect_count1 }}"
+      ></p>
+
+      <br />
+      <div class="button-container">
+        <a href="{% url 'logout' %}" class="btn-custom">logout</a>
+        <span class="instruction" id="logoutInstruction"
+          >アカウントからログアウトする</span
+        >
+      </div>
+      <br />
+      <br />
+    </div>
+    <!-- Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/umd3.1.2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Countdown timer functionality
+      function startTimer(duration, display) {
+        var timer = duration,
+          minutes,
+          seconds;
+        var timerInterval = setInterval(function () {
+          minutes = parseInt(timer / 60, 10);
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+
+          if (timer < 10) {
+            display.classList.add("timer-critical");
+          }
+
+          if (--timer < 0) {
+            clearInterval(timerInterval);
+            alert("時間は終わりました。 次回はもっと頑張ろう!!!");
+          }
+        }, 1000);
+      }
+
+      window.onload = function () {
+        var countdownMinutes = 1; // Set the duration of the timer here
+        var display = document.querySelector("#timer");
+        startTimer(countdownMinutes * 60, display);
+      };
+
+      // Form submission and showing the "Show result" button
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("quiz-form");
+        form.addEventListener("submit", function (e) {
+          // Optional: Add logic for AJAX submission or additional form handling here
+          // e.preventDefault(); // Uncomment this line if you are handling form submission via AJAX
+
+          // Show the "Show Result" button
+          document
+            .getElementById("showResultButton")
+            .classList.remove("hidden");
+        });
+      });
+
+      function showResults() {
+        // Logic for showing quiz results
+        var results = document.getElementById("results");
+        var correctCount = results.getAttribute("data-correct");
+        var incorrectCount = results.getAttribute("data-incorrect");
+        alert(
+          "Correct Answers: " +
+            correctCount +
+            "\nIncorrect Answers: " +
+            incorrectCount
+        );
+      }
+    </script>
+  </body>
+</html>
