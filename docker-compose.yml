@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: kanjiquiz-web
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DJANGO_SETTINGS_MODULE=user_manage.settings
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+    restart: always
+
+  db:
+    image: mariadb:10.6
+    container_name: kanjiquiz-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: web_weavers
+      MYSQL_PASSWORD: c6SrEGYv
+      MYSQL_DATABASE: user_manage_dv
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./Database:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: kanjiquiz-phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=root_password
+      - MYSQL_ROOT_PASSWORD=root_password
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb_data: 

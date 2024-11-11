@@ -59,7 +59,7 @@ class LoginEmailView(TemplateView):
   def post(self, request):
     # MariaDB(MySQL)へ接続パラメータ
     connection = MySQLdb.connect(
-      host='localhost',
+      host='db',
       user='web_weavers',
       passwd='c6SrEGYv',
       db='user_manage_dv'
@@ -121,7 +121,7 @@ class LoginPassView(TemplateView):
   def post(self, request):
     # MariaDB(MySQL)へ接続パラメータ
     connection = MySQLdb.connect(
-      host='localhost',
+      host='db',
       user='web_weavers',
       passwd='c6SrEGYv',
       db='user_manage_dv'
@@ -169,7 +169,7 @@ class LoginPassView(TemplateView):
       subject = 'SECURITY CODE セキュリティコードの送信'
       # メールの本文
       # 「\n」は、メール文を改行させるためのエスケープシーケンスです。
-      message = 'Your SECURITY CODE is :  '+ security_code + '  セキュリティコードは、以下になります。\n' + \
+      message = 'Your SECURITY CODE is:'+ security_code + 'セキュリティコードは、以下になります。\n' + \
                 'セキュリティコード：' + security_code
       # メールの送信者(実際は、スパムメール等を防ぐためにGmailアドレスに置き換えて送信されます。)
       from_email = 'WebWeavers74@gmail.com'
@@ -209,7 +209,7 @@ class LoginSecurityCodeView(TemplateView):
   def post(self, request):
     # MariaDB(MySQL)へ接続パラメータ
     connection = MySQLdb.connect(
-      host='localhost',
+      host='db',
       user='web_weavers',
       passwd='c6SrEGYv',
       db='user_manage_dv'

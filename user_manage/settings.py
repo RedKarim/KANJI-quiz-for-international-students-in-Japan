@@ -75,13 +75,24 @@ WSGI_APPLICATION = 'user_manage.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'user_manage_dv',
+        'USER': 'web_weavers',
+        'PASSWORD': 'c6SrEGYv',
+        'HOST': 'db',
+        'PORT': '3306',
+    },
+    'kanjiquiz': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'kanjiquiz',
+        'USER': 'web_weavers',
+        'PASSWORD': 'c6SrEGYv',
+        'HOST': 'db',
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -128,8 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'example@gmail.com'
-EMAIL_HOST_PASSWORD = 'ADD YOUR CREATED GMAIL APP PASSWORD '
+EMAIL_HOST_USER = 'WebWeavers74@gmail.com'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
 # セッション管理をキャッシュで行う

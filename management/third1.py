@@ -20,7 +20,7 @@ class ThirdQuiz1View(TemplateView):
         
         # Retrieve and prepare data as needed
         connection = MySQLdb.connect(
-            host='localhost',
+            host='db',
             user='web_weavers',
             passwd='c6SrEGYv',
             db='kanjiquiz'
@@ -60,7 +60,7 @@ class ThirdQuiz1View(TemplateView):
     def post(self, request):
         print(request.POST)
         connection = MySQLdb.connect(
-            host='localhost',
+            host='db',
             user='web_weavers',
             passwd='c6SrEGYv',
             db='kanjiquiz'
@@ -95,7 +95,7 @@ class ThirdQuiz1View(TemplateView):
     def compare_answers(self):
         print('aaa',self)
         connection = MySQLdb.connect(
-            host='localhost',
+            host='db',
             user='web_weavers',
             passwd='c6SrEGYv',
             db='kanjiquiz'

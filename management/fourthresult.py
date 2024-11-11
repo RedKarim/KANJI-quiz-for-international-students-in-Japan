@@ -11,7 +11,7 @@ class AnswerView(TemplateView):
 
         # Database connection and query
         connection = MySQLdb.connect(
-            host='localhost',
+            host='db',
             user='web_weavers',
             passwd='c6SrEGYv',
             db='kanjiquiz'

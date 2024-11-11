@@ -1,165 +1,142 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ title }}</title>
     <!-- Bootstrap CSS -->
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Styles -->
     <style>
-      body {
-        background: linear-gradient(-45deg, #0f0c29, #302b63, #90ee90);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        color: #f8f9fa; /* Light text */
-      }
-
-      @keyframes gradientBG {
-        0% {
-          background-position: 0% 50%;
+        body {
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #90ee90);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #f8f9fa; /* Light text */
         }
-        50% {
-          background-position: 100% 50%;
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        100% {
-          background-position: 0% 50%;
+
+        .btn-custom {
+            background-color: #6f42c1; /* Purple */
+            color: #fff;
+            border: none;
         }
-      }
 
-      .btn-custom {
-        background-color: #6f42c1; /* Purple */
-        color: #fff;
-        border: none;
-      }
+        .btn-custom:hover {
+            background-color: #f0ad4e; /* Yellow */
+            color: #fff;
+            transition: background-color 0.3s;
+        }
 
-      .btn-custom:hover {
-        background-color: #f0ad4e; /* Yellow */
-        color: #fff;
-        transition: background-color 0.3s;
-      }
+        a, .btn-custom {
+            color: #f0ad4e; /* Yellow */
+        }
 
-      a,
-      .btn-custom {
-        color: #f0ad4e; /* Yellow */
-      }
+        a:hover, .btn-custom:hover {
+            color: #d9534f; /* Red */
+            transition: color 0.3s;
+        }
 
-      a:hover,
-      .btn-custom:hover {
-        color: #d9534f; /* Red */
-        transition: color 0.3s;
-      }
+        input[type="submit"] {
+            background-color: #007bff; /* Bootstrap primary blue */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-      input[type="submit"] {
-        background-color: #007bff; /* Bootstrap primary blue */
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        margin-top: 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue */
+            cursor: pointer;
+        }
 
-      input[type="submit"]:hover {
-        background-color: #0056b3; /* Darker blue */
-        cursor: pointer;
-      }
-
-      form {
-        background-color: rgba(255, 255, 255, 0.1);
-        padding: 20px;
-        border-radius: 15px;
-      }
-      .btn-custom,
-      a {
-        background-color: #6f42c1; /* Purple */
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s, color 0.3s;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-      }
-
-      .btn-custom:hover,
-      a:hover {
-        background-color: #f0ad4e; /* Yellow */
-        color: #d9534f; /* Red */
-      }
-      .button-container {
-        position: relative;
-        display: inline-block; /* Allows the container to fit the content width */
-        margin-right: 10px; /* Optional: Adds some spacing between the buttons */
-      }
-      .instruction {
-        display: none;
-        position: absolute;
-        bottom: -30px; /* Adjust based on your layout and padding */
-        left: 0;
-        width: 100%;
-        text-align: center;
-        color: #0f0c29; /* Or any color you prefer */
-        z-index: 100;
-        background-color: #f8f9fa; /* Light text background for visibility */
-        padding: 5px 0; /* Padding for better visibility */
-        border-radius: 5px; /* Optional: for rounded corners */
-        font-size: 0.8rem; /* Adjust font size as needed */
-      }
-
-      .btn-custom:hover + .instruction {
-        display: block;
-      }
-
-      @media (max-width: 768px) {
         form {
-          width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
         }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container mt-4">
-      <h1 class="text-center">{{ heading }}</h1>
-      <h1 class="text-center">Input your email address</h1>
+        .btn-custom, a {
+            background-color: #6f42c1; /* Purple */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
 
-      <p class="text-center">{{ paragraph }}</p>
-      <div class="d-flex flex-column align-items-center">
-        <form
-          action="{% url 'login_email' %}"
-          method="POST"
-          class="w-50 text-center mx-auto"
-          w
-        >
-          {% csrf_token %} {{ form.as_p }}
-          <div class="button-container">
-            <input
-              type="submit"
-              value="メールアドレスの確認"
-              class="btn-custom"
-            />
-            <span class="instruction">Confirm Your email address</span>
-          </div>
-        </form>
-        <p>{{ message|safe }}</p>
-        <div class="button-container">
-          <a href="{% url 'index' %}" class="btn-custom">トップページ</a>
-          <span class="instruction">Back to the Top page</span>
+        .btn-custom:hover, a:hover {
+            background-color: #f0ad4e; /* Yellow */
+            color: #d9534f; /* Red */
+        }
+        .button-container {
+            position: relative;
+            display: inline-block; /* Allows the container to fit the content width */
+            margin-right: 10px; /* Optional: Adds some spacing between the buttons */
+        }
+        .instruction {
+            display: none;
+            position: absolute;
+            bottom: -30px; /* Adjust based on your layout and padding */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #0f0c29; /* Or any color you prefer */
+            z-index: 100;
+            background-color: #f8f9fa; /* Light text background for visibility */
+            padding: 5px 0; /* Padding for better visibility */
+            border-radius: 5px; /* Optional: for rounded corners */
+            font-size: 0.8rem; /* Adjust font size as needed */
+        }
+
+        .btn-custom:hover + .instruction {
+            display: block;
+        }
+
+
+        @media (max-width: 768px) {
+            form {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">{{ heading }}</h1>
+        <h1 class="text-center">Input your email address</h1>
+
+        <p class="text-center">{{ paragraph }}</p>
+        <div class="d-flex flex-column align-items-center">
+            <form action="{% url 'login_email' %}" method="POST" class="w-50 text-center mx-auto"w>
+                {% csrf_token %}
+                {{ form.as_p }}
+            <div class="button-container">
+                <input type="submit" value="メールアドレスの確認" class="btn-custom">
+                <span class="instruction">Confirm Your email address</span>
+            </div>
+            </form>
+            <p>{{ message|safe }}</p>
+            <div class="button-container">
+                <a href="{% url 'index' %}" class="btn-custom">トップページ</a>
+                <span class="instruction">Back to the Top page</span>
+            </div>
         </div>
-      </div>
     </div>
     <!-- Bootstrap JS and its dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/umd3.1.2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>

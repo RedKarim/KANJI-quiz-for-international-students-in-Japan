@@ -1,150 +1,140 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ title }}</title>
     <!-- Bootstrap CSS -->
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../style.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
     <!-- Custom Styles -->
     <style>
-      body {
-        background: linear-gradient(-45deg, #0f0c29, #302b63, #90ee90);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        color: #f8f9fa; /* Light text */
-      }
-
-      @keyframes gradientBG {
-        0% {
-          background-position: 0% 50%;
+        body {
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #90ee90);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #f8f9fa; /* Light text */
         }
-        50% {
-          background-position: 100% 50%;
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        100% {
-          background-position: 0% 50%;
+
+        .btn-custom, a {
+            background-color: #6f42c1; /* Purple */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
         }
-      }
 
-      .btn-custom,
-      a {
-        background-color: #6f42c1; /* Purple */
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s, color 0.3s;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-      }
-
-      .btn-custom:hover,
-      a:hover {
-        background-color: #f0ad4e; /* Yellow */
-        color: #d9534f; /* Red */
-      }
-
-      .table-quiz {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-collapse: collapse;
-        width: 100%;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 30); /* Simple shadow effect */
-      }
-
-      .table-quiz th,
-      .table-quiz td {
-        border-top: 1px solid #ddd; /* Light gray border */
-        padding: 8px;
-      }
-
-      .table-quiz th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: #6f42c1;
-        color: white;
-      }
-
-      input[type="radio"] {
-        margin-right: 5px;
-      }
-      #timer {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-        background-color: #6f42c1;
-        padding: 10px;
-        border-radius: 5px;
-        color: black;
-      }
-
-      .timer-critical {
-        color: red;
-      }
-      .hide {
-        display: none;
-      }
-
-      @media (max-width: 768px) {
-        .table-quiz,
-        .table-quiz th,
-        .table-quiz td {
-          border: none;
+        .btn-custom:hover, a:hover {
+            background-color: #f0ad4e; /* Yellow */
+            color: #d9534f; /* Red */
         }
 
         .table-quiz {
-          display: block;
-          overflow-x: auto;
-        }
-      }
-    </style>
-  </head>
+            background-color: rgba(255, 255, 255, 0.1);
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 30); /* Simple shadow effect */
 
-  <body>
+        }
+
+        .table-quiz th, .table-quiz td {
+            border-top: 1px solid #ddd; /* Light gray border */
+            padding: 8px;   
+        }
+
+        .table-quiz th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #6f42c1;  
+            color: white;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            background-color: #6f42c1;
+            padding: 10px;
+            border-radius: 5px;
+            color: black;
+        }
+
+        .timer-critical {
+            color: red;
+        }
+        .hide {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+        .table-quiz, .table-quiz th, .table-quiz td {
+            border: none;
+        }
+
+        .table-quiz {
+            display: block;
+            overflow-x: auto;
+        }
+    }
+    </style>
+</head>
+
+<body>
     <div class="container mt-4">
-      <h1>{{ title }}</h1>
-      <!-- ... other content ... -->
-      <br />
-      <a href="{% url 'rsc' %}" class="btn-custom">Learning Resources</a>
-      <br />
-      <br />
-      <table class="table-quiz">
-        <tr>
-          <th>問題番号</th>
-          <th>問題</th>
-          <th>正答</th>
-          <th>あなたの答え</th>
-          <th></th>
-        </tr>
-        {% for row in rows %}
-        <tr>
-          <td>{{ row.0 }}</td>
-          <td>{{ row.1 }}</td>
-          <td>{{ row.2 }}</td>
-          <td>{{ row.3 }}</td>
-          <td>{% if row.2 == row.3 %} 🙆🏿‍ {% else %} 🙅🏼‍ {% endif %}</td>
-        </tr>
-        {% endfor %}
-      </table>
-      <a href="{% url 'mysql_to_html' %}" class="btn-custom">First Quiz</a>
-      <a href="{% url 'logout' %}" class="btn-custom">logout</a
-      ><br /><br /><br />
+
+        <h1>{{ title }}</h1>
+        <!-- ... other content ... -->
+<br>
+        <a href="{% url 'rsc' %}" class="btn-custom">Learning Resources</a>
+<br>
+<br>
+        <table class="table-quiz">
+            <tr>
+                <th>問題番号</th>
+                <th>問題</th>
+                <th>正答</th>
+                <th>あなたの答え</th>
+                <th></th>
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row.0 }}</td>
+                <td>{{ row.1 }}</td>
+                <td>{{ row.2 }}</td>
+                <td>{{ row.3 }}</td>
+                <td>
+                    {% if row.2 == row.3 %}
+                        🙆🏿‍
+                    {% else %}
+                        🙅🏼‍
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'mysql_to_html' %}" class="btn-custom">First Quiz</a>
+        <a href="{% url 'logout' %}" class="btn-custom">logout</a><br><br><br>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.2/umd3.1.2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>
