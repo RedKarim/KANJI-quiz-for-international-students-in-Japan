@@ -3,19 +3,11 @@
 ![スクリーンショット 2024-06-25 170600](https://github.com/RedKarim/KANJI-quiz-for-international-students-in-Japan/assets/156578327/f0909c39-2a2e-434a-9366-8ae29ecdea4f)
 ![スクリーンショット 2024-06-25 170459](https://github.com/RedKarim/KANJI-quiz-for-international-students-in-Japan/assets/156578327/e163bf62-8f86-404e-ad16-f9a6b33dcc1a)
 
-## Install Apache and MariaDB and add the username and password
-```bash
-user='web_weavers',
-passwd='c6SrEGYv',
-```
-## Add these 2 databases to MariaDB
-```bash
-kanjiquiz and user_manage_dv
-```
+
 ## Make an app password with a gmail account for the 2 step verification email message used for generating a security code to login
 ![スクリーンショット 2024-06-25 172050](https://github.com/RedKarim/KANJI-quiz-for-international-students-in-Japan/assets/156578327/b584aee7-da80-4e9e-a8ed-3c3f2b877140)
 
-## Run server the Django app
+## Run the Docker container thatincludes 3 images of DjangoApp, MariaDB and myphpadmin
 ```bash
- python3 manage.py runserver
+ docker-compose up --build
 ```
